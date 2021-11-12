@@ -8,6 +8,9 @@
         + If a plane lands, its `isFlying` property gets set to false.
 */
 
+const { exportDefaultSpecifier } = require("@babel/types");
+const { TestWatcher } = require("@jest/core");
+
 // EXAMPLE SOLUTION CODE:
 class Airplane {
   constructor(name) {
@@ -164,7 +167,16 @@ class Instructor extends Lambdasian{
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`;
   }
+  adjustGrade(student){
+    let randomNum = Math.floor(Math.random() * 2);
+    if(randomNum === 1){
+      student.grade = student.grade + Math.floor(Math.random() * 50);
+    }else if(randomNum === 0){
+      student.grade = student.grade - Math.floor(Math.random() * 50);
+    }
+  }
 }
+
 /*
   TASK 5
     - Write a Student class extending Lambdasian.
@@ -186,6 +198,7 @@ class Student extends Lambdasian {
      this.previousBackground = object.previousBackground;
      this.className = object.className;
      this.favSubjects = object.favSubjects;
+     this.grade = Math.floor(Math.random() * 101 );
    }
    listSubjects(){
      let returnString = 'Loving';
@@ -201,7 +214,46 @@ class Student extends Lambdasian {
    sprintChallenge(subject){
     return `${this.name} has begun sprint challenge on ${subject}`;
    }
+   graduate(){
+    if(this.grade >= 70){
+      return `Congrats ${this.name}, you passed your class!`;
+    }else{
+      return `I'm so sorry ${this.name} but you will have to repeat the class because you failed`;
+    }
+   }
 }
+
+const brandon = new Student({
+  name: 'andrew',
+  age: 30,
+  location: 'Chicago',
+  previousBackground: 'Glassblowing',
+  className: 'computerScience 101',
+  favSubjects: 'Math',
+})
+
+const teach1 = new Instructor({
+  name: 'Mr. Teacher',
+  age: 66,
+  location: 'Chicago',
+  specialty: 'Math202',
+  favLanguage: 'Chinese',
+  catchPhrase: 'Get to it'
+})
+
+console.log('andrews grade: ' + brandon.grade);
+teach1.adjustGrade(brandon);
+console.log('Andrew grade after adjustment' + brandon.grade);
+console.log(brandon.graduate());
+/*
+  STRETCH PROBLEM (no tests!)
+    - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
+    - Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
+    - Add a graduate method to a student.
+      + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
+      + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
+*/
+
 
 /*
   TASK 6
