@@ -22,6 +22,8 @@ class Airplane {
   }
 }
 
+
+
 /*
 // 👇 COMPLETE YOUR WORK BELOW 👇
 // 👇 COMPLETE YOUR WORK BELOW 👇
@@ -42,9 +44,32 @@ class Airplane {
 */
 
 class Person {
-  
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+  }
+  eat(food){
+    if(this.stomach.length < 10){
+    this.stomach.push(food);
+    }
+  }
+  poop(){
+    this.stomach = [];
+  }
+  toString(){
+    return `${this.name}, ${this.age}`
+  }
+
 }
 
+const andrew = new Person('andrew', 30);
+andrew.eat('piza');
+andrew.eat('pie');
+andrew.eat('cookie');
+console.log(andrew.stomach);
+andrew.poop();
+console.log(andrew.stomach);
 /*
   TASK 2
     - Write a Car class whose constructor initializes `model` and `milesPerGallon` from arguments.
@@ -60,8 +85,35 @@ class Person {
 */
 
 class Car {
-  
+  constructor(model, milesPerGallon){
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+  fill(gallons){
+    this.tank += gallons;
+  }
+  drive(distance){
+    let milesLeft = this.tank * this.milesPerGallon;
+    console.log('milesLeft: ' + milesLeft);
+    console.log('distance: ' + distance);
+    if(milesLeft <= distance){
+      this.tank = 0;
+      this.odometer += milesLeft;
+      return `I ran out of fuel at ${this.odometer} miles!`;
+    }else{
+    this.odometer += distance;
+    this.tank -= (this.distance / this.milesPerGallon).toFixed(2);
+    }
+  }
 }
+
+const myCar = new Car('tesla', 30);
+myCar.fill(12);
+myCar.drive(60);
+console.log(myCar);
+
 
 /*
   TASK 3
